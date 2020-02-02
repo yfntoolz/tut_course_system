@@ -354,6 +354,7 @@ function check()
         }
 
         function closeModal() {
+            
             $('#modalPoll-1').removeClass('show').attr('style', 'display:none;');
             $(button_id).html('Apply').attr('disabled', false);
 
