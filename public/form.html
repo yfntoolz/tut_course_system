@@ -1,0 +1,74 @@
+<html>
+    <body>
+        <div>
+            Create User
+            <hr/>
+            <form action="/user_create" method="POST">
+                <input placeholder="First name" name="first_name" id="first_name"/>
+                <input placeholder="Last name" name="last_name" id="last_name" type="text"/>
+                <input placeholder="Email" name="email" type="email"/>
+                <input placeholder="Highest Qualification" name="highest_qualification"/>
+                <input placeholder="APS Score" name="aps_score"/>
+                <input placeholder="English" name="english"/>
+                <input placeholder="Maths" name="maths"/>
+                <input placeholder="Physics" name="physics"/>
+                <input placeholder="Password" name="password" id="create_password" type="password"/>
+                <input placeholder="Verify Password" id="password_verify" type="password"/>
+                <input type="submit" id="btnSubmit" value="Submit" onclick="return verify()" />
+            </form>
+        </div>
+
+        <script>
+            function verify() {
+                
+                verifyNames();
+
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("password_verify").value;
+
+                // If password not entered 
+                if (password == '') {
+
+                    alert("Please enter Password");
+
+                } else if (confirmPassword == '') {
+
+                    alert("Please enter confirm password");
+
+                } else if (password != confirmPassword) {
+
+                    alert("Passwords do not match.");
+
+                    return false;
+                }
+                        
+                return true;
+
+            }
+
+            function verifyNames() {
+
+                var firstName = document.getElementById("first_name").value;
+                var lastName = document.getElementById("last_name").value;
+                var letters = /^[A-Za-z]+$/;
+
+                if (firstName == '') {
+
+                    alert("Please enter first name");
+
+                } else if (lastName == '') {
+
+                    alert("Please enter last name");
+
+                } else if (!firstName.match(letters) || !lastName.match(letters)) {
+                    
+                    alert("Alphanumeric characters only for first and last names without spaces")
+                    
+                }
+
+                return true;
+            }
+
+        </script>
+    </body>
+</html>
