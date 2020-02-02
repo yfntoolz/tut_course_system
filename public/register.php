@@ -1,9 +1,19 @@
 <?php
+
+function cache(){
     session_start();
     $email = $_COOKIE["student_email"];
+    $aps = $_COOKIE["student_aps"];
+    $english = $_COOKIE["student_eng"];
+    $math = $_COOKIE["student_math"];
+    $phy = $_COOKIE["student_phy"];
+
     $_SESSION['student_email'] = $email;
-
-
+    $_SESSION['student_aps'] = $aps;
+    $_SESSION['student_english'] = $english;
+    $_SESSION['student_math'] = $math;
+    $_SESSION['student_physics'] = $phy;
+}
 ?>
 
 <!DOCTYPE html>
@@ -288,7 +298,16 @@
 
         function captureEmail() {
             cache_email = document.forms["reg_form"]["email"].value;
+            cache_aps = document.forms["reg_form"]["aps_score"].value;
+            cache_english = document.forms["reg_form"]["english"].value;
+            cache_math = document.forms["reg_form"]["mathematics"].value;
+            cache_physics = document.forms["reg_form"]["physics"].value;
+
             createCookie("student_email", cache_email, 1);
+            createCookie("student_aps", cache_aps, 1);
+            createCookie("student_eng", cache_english, 1);
+            createCookie("student_math", cache_math, 1);
+            createCookie("student_phy", cache_physics, 1);
         }
 
         // Function to create the cookie 

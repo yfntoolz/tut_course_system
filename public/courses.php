@@ -1,3 +1,53 @@
+<?php
+
+session_start();
+
+$student_email = $_SESSION['student_email'];
+$rank_message = 'Your ranking is looking good. Send your application to complete the process.';
+$available_courses = '';
+/*
+$email = $_SESSION['student_email'];
+$aps = $_SESSION['student_aps'];
+$eng = $_SESSION['student_english'];
+$math = $_SESSION['student_math'];
+$phy = $_SESSION['student_physics'];
+*/
+$aps = 24;
+$eng = 4;
+$math = 4;
+$phy = 5;
+
+
+function check()
+{
+    require('../connect.php');
+
+    $sql = "SELECT course_name,aps FROM course WHERE english <= $eng AND maths <= $math AND physics <= $phy AND aps <= $aps";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        $rank_message = 'Your ranking does not meet the course requirements. Please consider the below courses.';
+
+        while ($row = $result->fetch_assoc()) {
+            $available_courses .= "<li>" . $row["course_name"] . " - APS:" . $row["aps"]. "</li>";
+        }
+        
+    } else {
+        $rank_message = 'We regret to inform you that your marks are too low to be ranked in any of our courses.';
+    }
+
+    $conn->close();
+}
+
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +75,7 @@
             </a>
 
             <!-- Collapse -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -104,8 +153,7 @@
 
                     <!-- Content -->
                     <div class="card-body white">
-                        <button type="button" id="btn-1" class="btn btn-primary mt-5 float-right"
-                         onclick="openModal(1,'COMPUTER SYSTEMS (NDCY03) - NQF Level 6',24,4,4,4)">
+                        <button type="button" id="btn-1" class="btn btn-primary mt-5 float-right" onclick="openModal(1,'COMPUTER SYSTEMS (NDCY03) - NQF Level 6',24,4,4,4)">
                             Apply
                         </button>
                         <h4 class="text-uppercase font-weight-bold my-4">Requirements</h4>
@@ -133,8 +181,7 @@
 
 
     <!-- Modal: modalPoll -->
-    <div class="modal fade right" id="modalPoll-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="false">
+    <div class="modal fade right" id="modalPoll-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
             <div class="modal-content">
                 <!--Header-->
@@ -168,10 +215,10 @@
                     <!-- Radio -->
 
                     <p class="text-center">
-                        Your ranking does not meet the course requirements. Please consider the below courses.
+                        <?php echo $rank_message;?>
                     </p>
                     <ul>
-                        <li><strong>COMPUTER SYSTEMS (Extended) (NDCYF0) - NQF Level 6</strong></li>
+                        <?php echo $available_courses;?>
                     </ul>
 
                 </div>
@@ -191,8 +238,7 @@
     <!-- Modal: modalPoll -->
 
     <!-- Modal: modalPoll -->
-    <div class="modal fade right" id="modalPoll-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="false">
+    <div class="modal fade right" id="modalPoll-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
             <div class="modal-content">
                 <!--Header-->
@@ -236,8 +282,7 @@
                     <a type="button" class="btn btn-primary waves-effect waves-light">Send
                         <i class="fa fa-paper-plane ml-1"></i>
                     </a>
-                    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal"
-                        onmouseout="removechange()">Cancel</a>
+                    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal" onmouseout="removechange()">Cancel</a>
                 </div>
             </div>
         </div>
@@ -249,7 +294,6 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/mdb.min.js"></script>
     <script type="text/javascript">
-
         // Animations initialization
         //new WOW().init();
 
@@ -274,8 +318,8 @@
         var course_math;
         var course_phy;
 
-        function openModal(id,course,aps,eng,math,phy) {
-            
+        function openModal(id, course, aps, eng, math, phy) {
+
             course_id = id;
             button_id = '#btn-' + course_id;
             course_name = course;
@@ -295,15 +339,15 @@
         // Compares course qualification criteria with the marks the user got
         function checkIfQualifies(aps, english, maths, physics) {
 
-            var student_aps = 23;
+            var student_aps = 24;
             var student_eng = 4;
             var student_math = 4;
-            var student_phy = 4;
-            
+            var student_phy = 5;
+
             if (!(aps <= student_aps && english <= student_eng && maths <= student_math && physics <= student_phy)) {
-
+                
                 alert("You don't qualify bitch");
-
+                <?php check();?>
                 return false;
 
             }
@@ -312,7 +356,7 @@
         function closeModal() {
             $('#modalPoll-1').removeClass('show').attr('style', 'display:none;');
             $(button_id).html('Apply').attr('disabled', false);
-            
+
         }
 
     </script>
