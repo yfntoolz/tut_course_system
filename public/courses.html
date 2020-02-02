@@ -105,7 +105,7 @@
                     <!-- Content -->
                     <div class="card-body white">
                         <button type="button" id="btn-1" class="btn btn-primary mt-5 float-right"
-                            onclick="openModal(1,'COMPUTER SYSTEMS (NDCY03) - NQF Level 6',24,4,4,4)">
+                         onclick="openModal(1,'COMPUTER SYSTEMS (NDCY03) - NQF Level 6',24,4,4,4)">
                             Apply
                         </button>
                         <h4 class="text-uppercase font-weight-bold my-4">Requirements</h4>
@@ -251,7 +251,7 @@
     <script type="text/javascript">
 
         // Animations initialization
-        new WOW().init();
+        //new WOW().init();
 
         function changeOne(course) {
             $('#btn-one').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Applying...').attr('disabled', true);
@@ -275,6 +275,7 @@
         var course_phy;
 
         function openModal(id,course,aps,eng,math,phy) {
+            
             course_id = id;
             button_id = '#btn-' + course_id;
             course_name = course;
@@ -287,7 +288,25 @@
             $(button_id).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Applying...').attr('disabled', true);
 
             //play here
+            console.log("Washa");
+            checkIfQualifies(course_aps, course_eng, course_math, course_phy);
+        }
 
+        // Compares course qualification criteria with the marks the user got
+        function checkIfQualifies(aps, english, maths, physics) {
+
+            var student_aps = 23;
+            var student_eng = 4;
+            var student_math = 4;
+            var student_phy = 4;
+            
+            if (!(aps <= student_aps && english <= student_eng && maths <= student_math && physics <= student_phy)) {
+
+                alert("You don't qualify bitch");
+
+                return false;
+
+            }
         }
 
         function closeModal() {
@@ -295,7 +314,6 @@
             $(button_id).html('Apply').attr('disabled', false);
             
         }
-
 
     </script>
 

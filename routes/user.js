@@ -125,7 +125,7 @@ router.post('/login', (req, resp) => {
     })
 })
 
-router.post('/get_courses', (req, resp) => {
+router.get('/get_courses', (req, resp) => {
 
     const connection = getConnection()
 

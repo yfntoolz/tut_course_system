@@ -19,10 +19,4 @@ const router = require('./routes/user.js')
 
 app.use(router)
 
-// We gon' need this shit for rankings
-// router.get('/rankings', (req, resp) => {
-//     console.log("Show rankings of students with high marks...")
-//     resp.end()
-// })
-
 app.listen(1337)
