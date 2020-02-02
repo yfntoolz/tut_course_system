@@ -76,7 +76,9 @@ router.post('/user_create', (req, resp) => {
             return
         }
 
-        console.log("Inserted a new user")
+        resp.writeHead(201, { "Location": "http://" + req.headers['host'] + '/courses.html' });
+
+        //console.log("Inserted a new user")
 
     })
 })

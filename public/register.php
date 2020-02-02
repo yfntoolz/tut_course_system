@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    $email = $_COOKIE["student_email"];
+    $_SESSION['student_email'] = $email;
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,7 +97,7 @@
                     </div>
                 </div>
 
-                <form role="form" action="/user_create" method="post">
+                <form role="form" name="reg_form" action="/user_create" onsubmit="captureEmail()" method="post">
 
                     <!-- First Step -->
                     <div class="row setup-content" id="step-9">
@@ -99,11 +107,13 @@
                         <div class="col-md-6">
                             <div class="form-group md-form">
                                 <label for="first_name" data-error="wrong" data-success="right">First Name</label>
-                                <input id="first_name" name="first_name" type="text" required class="form-control validate">
+                                <input id="first_name" name="first_name" type="text" required
+                                    class="form-control validate">
                             </div>
                             <div class="form-group md-form ">
                                 <label for="last_name" data-error="wrong" data-success="right">Last Name</label>
-                                <input id="last_name" name="last_name" type="text" required class="form-control validate">
+                                <input id="last_name" name="last_name" type="text" required
+                                    class="form-control validate">
                             </div>
                             <div class="form-group md-form ">
                                 <label for="idnumber" data-error="wrong" data-success="right">ID Number</label>
@@ -121,8 +131,7 @@
                                 <input id="password" name="password" type="password" required class="form-control validate">
                             </div>
                             <div class="form-group md-form ">
-                                <label for="password_verify" data-error="wrong" data-success="right">Confirm
-                                    Password</label>
+                                <label for="password_verify" data-error="wrong" data-success="right">Confirm Password</label>
                                 <input id="password_verify" name="password_verify" type="password" required class="form-control validate">
                             </div>
                         </div>
@@ -133,46 +142,53 @@
 
                     <!-- Second Step -->
                     <div class="row setup-content" id="step-10">
-                            <div class="col-md-12">
-                                <h3><strong>Qualification Information</strong></h3>
+                        <div class="col-md-12">
+                            <h3><strong>Qualification Information</strong></h3>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group md-form">
+                                <select class="form-control"
+                                    style="border: none;border-bottom: 1pt solid rgba(0, 0, 0, 0.171);"
+                                    name="highest_qualification" id="sel1">
+                                    <option>Select Highest Qualification</option>
+                                    <option value="National Senior Certificate">National Senior Certificate</option>
+                                    <option value="National Certificate (Vocational) at NQF Level 4">National
+                                        Certificate (Vocational) at NQF Level 4</option>
+                                    <option value="National N Certificate">National N Certificate</option>
+                                </select>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group md-form">
-                                    <select class="form-control" style="border: none;border-bottom: 1pt solid rgba(0, 0, 0, 0.171);" name="highest_qualification" id="sel1">
-                                        <option>Select Highest Qualification</option>
-                                        <option value="National Senior Certificate">National Senior Certificate</option>
-                                        <option value="National Certificate (Vocational) at NQF Level 4">National Certificate (Vocational) at NQF Level 4</option>
-                                        <option value="National N Certificate">National N Certificate</option>
-                                      </select>
-                                </div>
-                                <div class="form-group md-form ">
-                                    <label for="aps_score" data-error="wrong" data-success="right">APS Score</label>
-                                    <input id="aps_score" name="aps_score" type="number" required class="form-control validate">
-                                </div>
-                                <div class="form-group md-form ">
-                                      <div class="form-check md-form" style="margin-left: 10px;">
-                                        <label class="form-check-label">
-                                          <input type="checkbox" class="form-check-input" value="" required>I confirm that the information provided in this form is accurate and can be verified with the Department of Education.
-                                        </label>
-                                      </div>
-                                </div>
-    
+                            <div class="form-group md-form ">
+                                <label for="aps_score" data-error="wrong" data-success="right">APS Score</label>
+                                <input id="aps_score" name="aps_score" type="number" required
+                                    class="form-control validate">
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group md-form ">
-                                    <label for="english" data-error="wrong" data-success="right">English</label>
-                                    <input id="english" name="english" type="number" required class="form-control validate">
-                                </div>
-                                <div class="form-group md-form ">
-                                    <label for="mathematics" data-error="wrong" data-success="right">Mathematics</label>
-                                    <input id="mathematics" name="mathematics" type="number" required class="form-control validate">
-                                </div>
-                                <div class="form-group md-form ">
-                                    <label for="physics" data-error="wrong" data-success="right">Physical Sciences</label>
-                                    <input id="physics" name="physics" type="number" required class="form-control validate">
+                            <div class="form-group md-form ">
+                                <div class="form-check md-form" style="margin-left: 10px;">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" value="" required>I confirm that
+                                        the information provided in this form is accurate and can be verified with the
+                                        Department of Education.
+                                    </label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group md-form ">
+                                <label for="english" data-error="wrong" data-success="right">English</label>
+                                <input id="english" name="english" type="number" required class="form-control validate">
+                            </div>
+                            <div class="form-group md-form ">
+                                <label for="mathematics" data-error="wrong" data-success="right">Mathematics</label>
+                                <input id="mathematics" name="mathematics" type="number" required
+                                    class="form-control validate">
+                            </div>
+                            <div class="form-group md-form ">
+                                <label for="physics" data-error="wrong" data-success="right">Physical Sciences</label>
+                                <input id="physics" name="physics" type="number" required class="form-control validate">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
                             <button class="btn btn-indigo btn-rounded prevBtn float-left"
                                 type="button">Previous</button>
                             <button class="btn btn-indigo btn-rounded nextBtn float-right" type="button">Next</button>
@@ -181,14 +197,17 @@
 
                     <!-- Third Step -->
                     <div class="row setup-content" id="step-11">
-            
+
                         <div class="col-md-12">
-                            <h3 class="font-weight-bold pl-0 my-4"><strong>You will be required to login once you have completed all necessary information.</strong></h3>
+                            <h3 class="font-weight-bold pl-0 my-4"><strong>You will be required to login once you have
+                                    completed all necessary information.</strong></h3>
                         </div>
                         <div class="col-md-12" style="margin-bottom: 70px;">
                             <div class="form-check md-form" style="margin-left: 10px;">
                                 <label class="form-check-label">
-                                  <input type="checkbox" class="form-check-input" value="" required>I confirm that the information I provided is accurate and can be verified with the Deprtment of Education and the Department of Home Affairs.
+                                    <input type="checkbox" class="form-check-input" value="" required>I confirm that the
+                                    information I provided is accurate and can be verified with the Deprtment of
+                                    Education and the Department of Home Affairs.
                                 </label>
                             </div>
                         </div>
@@ -197,7 +216,7 @@
                                 type="button">Previous</button>
                             <button class="btn btn-default btn-rounded float-right" type="submit">Submit</button>
                         </div>
-                        
+
                     </div>
 
                 </form>
@@ -246,7 +265,7 @@
                 var curStep = $(this).closest(".setup-content"),
                     curStepBtn = curStep.attr("id"),
                     nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-                    curInputs = curStep.find("input[type='text'],input[type='url']"),
+                    curInputs = curStep.find("input[type='text'],input[type='email'],input[type='password'],input[type='number'],input[type='url']"),
                     isValid = true;
 
                 $(".form-group").removeClass("has-error");
@@ -263,6 +282,31 @@
 
             $('div.setup-panel div a.btn-indigo').trigger('click');
         });
+    </script>
+    <script type="text/javascript">
+        var cache_email;
+
+        function captureEmail() {
+            cache_email = document.forms["reg_form"]["email"].value;
+            createCookie("student_email", cache_email, 1);
+        }
+
+        // Function to create the cookie 
+        function createCookie(name, value, days) {
+            var expires;
+
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toGMTString();
+            }
+            else {
+                expires = "";
+            }
+
+            document.cookie = escape(name) + "=" +
+                escape(value) + expires + "; path=/";
+        } 
     </script>
 
 </body>
