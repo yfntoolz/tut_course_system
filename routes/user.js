@@ -129,10 +129,10 @@ router.get('/get_courses', (req, resp) => {
 
     const connection = getConnection()
 
-    var english = req.body.english;
-    var maths = req.body.maths;
-    var physics = req.body.physics;
-    var aps = req.body.aps;
+    var english = '5';
+    var maths = '5';
+    var physics = '5';
+    var aps = '40';
 
     var queryString = "SELECT course_name, aps FROM course WHERE english <= ? AND maths <= ? AND physics <= ? AND aps <= ?";
 
@@ -142,7 +142,7 @@ router.get('/get_courses', (req, resp) => {
 
             resp.send({
                 "code": 400,
-                "Failed": "Error Occurred"
+                "Failed": "Error Occurred: " + error
             })
 
         } else {

@@ -20,3 +20,10 @@ const router = require('./routes/user.js')
 app.use(router)
 
 app.listen(1337)
+
+const phpServer = require('php-server');
+
+(async () => {
+    const server = await phpServer();
+    console.log(`PHP server running at ${server.url}`)
+})();
