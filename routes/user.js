@@ -4,9 +4,14 @@ const router = express.Router()
 
 router.get('/users', (req, resp) => {
 
-    const connection = getConnection()
-    //const userId = req.params.id
-    var queryString = "SELECT * FROM mysampletable";
+    const connection = getConnection();
+
+    const email = getEmail();
+
+    console.log("After invoking getEmail() the value is " + email);
+
+    var queryString = "SELECT aps_score,english,maths,physics FROM student WHERE email = 'thulani.nkabini@live.com'";
+    //var queryString = "SELECT aps_score,english,maths,physics FROM student WHERE email = " + email[0].email;
 
     connection.query(queryString, (error, rows, fields) => {
 
@@ -21,7 +26,137 @@ router.get('/users', (req, resp) => {
 
         resp.json(rows)
     })
+
+
+
 })
+
+router.get('/active_user', (req, resp) => {
+
+    const connection = getConnection();
+
+    var email_active;
+
+    var queryString = "SELECT email FROM active_user";
+
+    connection.query(queryString, (error, res, rows) => {
+
+        if (error) {
+
+            console.log('Failed to query for users ' + error)
+            res.sendStatus(500)
+
+            return
+
+        } else {
+
+            console.log("Executing else statement that should return " + res[0].email);
+
+            email_active = res[0].email;
+
+            console.log("After invoking getEmail() the value is " + email_active);
+
+            var queryString = "SELECT * FROM student WHERE email = ?";
+
+            connection.query(queryString, [email_active], (error, rows, fields) => {
+
+                if (error) {
+
+                    console.log('Failed to query for users ' + error)
+                    resp.sendStatus(500)
+
+                    return
+
+                }
+
+                resp.json(rows)
+            })
+           
+
+        }
+    })
+
+
+})
+
+router.get('/dashboard', (req, resp) => {
+
+    const connection = getConnection();
+
+    var email_active;
+
+    var queryString = "SELECT email FROM active_user";
+
+    connection.query(queryString, (error, res, rows) => {
+
+        if (error) {
+
+            console.log('Failed to query for users ' + error)
+            res.sendStatus(500)
+
+            return
+
+        } else {
+
+            console.log("Executing else statement that should return " + res[0].email);
+
+            email_active = res[0].email;
+
+            console.log("After invoking getEmail() the value is " + email_active);
+
+            var queryString = "SELECT * FROM student WHERE email = ?";
+
+            connection.query(queryString, [email_active], (error, rows, fields) => {
+
+                if (error) {
+
+                    console.log('Failed to query for users ' + error)
+                    resp.sendStatus(500)
+
+                    return
+
+                }
+
+                resp.json(rows)
+            })
+
+
+        }
+    })
+
+
+})
+
+function getEmail() {
+
+    const connection = getConnection();
+
+    var queryString = "SELECT email FROM active_user LIMIT 1";
+
+    connection.query(queryString, (error, res, rows) => {
+
+        if (error) {
+
+            console.log('Failed to query for users ' + error)
+            res.sendStatus(500)
+
+            return
+
+        } else {
+
+            console.log("Executing else statement that should return " + res[0].email);
+
+            return res[0].email;
+
+        }
+    })
+}
+
+var response = (function () {
+    var a;
+    // calculate a
+    return a;
+})();
 
 // Register User
 router.post('/user_create', (req, resp) => {
@@ -38,32 +173,8 @@ router.post('/user_create', (req, resp) => {
 
     const connection = getConnection()
 
-    const selectString = "SELECT * FROM student WHERE email = ?";
-
-    connection.query(selectString, [emailAddress], (error, results, fields) => {
-
-        if (error) {
-
-            resp.send({
-                "code": 400,
-                "Failed": "Error Occurred"
-            })
-
-            return false;
-
-        } else if (results.length > 0) {
-
-            resp.send({
-                "code": 500,
-                "Error": "Email address already exists, login instead"
-            });
-
-            return false;
-            
-        }
-    })
-
     const queryString = "INSERT INTO student (first_name, last_name, email, password, highest_qualification, aps_score, english, maths, physics) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    const queryString2 = "INSERT INTO active_user (email) VALUES (?)"
 
     connection.query(queryString, [firstName, lastName, emailAddress, password, highestQualification, apsScore, english, maths, physics], (err, results, fields) => {
 
@@ -76,9 +187,30 @@ router.post('/user_create', (req, resp) => {
             return
         }
 
-        resp.writeHead(201, { "Location": "http://" + req.headers['host'] + '/courses.html' });
+        //resp.writeHead(201, { "Location": "http://" + req.headers['host'] + '/courses.html' });
 
-        //console.log("Inserted a new user")
+        return
+
+    })
+
+    connection.query(queryString2, [emailAddress], (err, results, fields) => {
+
+        if (err) {
+
+            console.log("Failed to insert new user: " + err)
+
+            resp.sendStatus(500)
+
+            return
+        }
+
+        resp.writeHead(301,
+            { Location: "http://" + req.headers['host'] + '/courses.html' }
+        );
+        resp.end();
+        //resp.writeHead(200, { "Location": "http://" + req.headers['host'] + '/courses.html' });
+
+        //resp.sendStatus(200)
 
     })
 })
@@ -103,10 +235,29 @@ router.post('/login', (req, resp) => {
         } else {
             if (results.length > 0) {
                 if (results[0].password == password) {
-                    resp.send({
-                        "code": 200,
-                        "success": "Login Sucessfull"
-                    });
+
+                    const queryString2 = "INSERT INTO active_user (email) VALUES (?)";
+
+                    connection.query(queryString2, [email], (err, results, fields) => {
+
+                        if (err) {
+
+                            console.log("Failed to insert new user: " + err)
+
+                            resp.sendStatus(500)
+
+                            return
+                        }else{
+                            
+                        }
+
+
+                    })
+
+                    resp.writeHead(301,
+                        { Location: "http://" + req.headers['host'] + '/dashboard.html' }
+                    );
+                    resp.end();
                 }
                 else {
                     resp.send({
@@ -125,14 +276,36 @@ router.post('/login', (req, resp) => {
     })
 })
 
-router.get('/get_courses', (req, resp) => {
+router.post('/logout', (req, resp) => {
 
     const connection = getConnection()
 
-    var english = '5';
-    var maths = '5';
-    var physics = '5';
-    var aps = '40';
+    var queryString = "DELETE FROM active_user;";
+
+    connection.query(queryString, (error, results, fields) => {
+
+        if (error) {
+            resp.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            resp.writeHead(301,
+                { Location: "http://" + req.headers['host'] + '/index.html' }
+            );
+            resp.end();
+        }
+    })
+})
+
+router.get('/get_courses/:aps/:eng/:math/:phy', (req, resp) => {
+
+    const connection = getConnection()
+
+    var english = req.params.eng;
+    var maths = req.params.math;
+    var physics = req.params.phy;
+    var aps = req.params.aps;
 
     var queryString = "SELECT course_name, aps FROM course WHERE english <= ? AND maths <= ? AND physics <= ? AND aps <= ?";
 
@@ -154,13 +327,45 @@ router.get('/get_courses', (req, resp) => {
             } else {
 
                 resp.send({
-                    "code": 404,
-                    "Failed": "No Courses Retrieved"
+                    "message": "We regret to inform you that your marks are too low to be ranked against any of our courses."
                 })
             }
         }
     })
 })
+
+
+
+// Register User
+router.get('/apply/:course/:emailAddress/:rank', (req, resp) => {
+
+    const course = req.params.course;
+    const rank = req.params.rank;
+    const emailAddress = req.params.emailAddress;
+
+    const connection = getConnection()
+
+    const queryString = "INSERT INTO ranks (course_id, student_email, ranking) VALUES (?, ?, ?)"
+
+    connection.query(queryString, [course,emailAddress,rank], (err, results, fields) => {
+
+        if (err) {
+
+            console.log("Failed to insert new user: " + err)
+            resp.sendStatus(500)
+
+            return
+        }
+
+        resp.send("success")
+        //resp.writeHead(201, { "Location": "http://" + req.headers['host'] + '/courses.html' });
+
+        return
+
+    })
+
+})
+
 
 function getConnection() {
 

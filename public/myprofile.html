@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body onload="profile()">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark scrolling-navbar">
         <div class="container">
@@ -52,10 +52,7 @@
 
                 <!-- Right -->
                 <ul class="navbar-nav nav-flex-icons">
-                    <li class="nav-item">
-                        <a class="nav-link">Thulani Nkabini
-                        </a>
-                    </li>
+
                     <li class="nav-item">
                         <a href="" class="nav-link" target="_blank">
                             | <i class="fas fa-sign-out-alt"></i>
@@ -79,7 +76,7 @@
             <img class="background" src="./img/overlays/pp.jpg">
             <div class="profile_pic">
               <img src="./img/overlays/pp.jpg">
-              <p class="title">Thulani Nkabini</p>
+              <p class="title" id="name_badge">Thulani Nkabini</p>
               <p class="sub_title">Student</p>
               <div class="icons1">
                 <i class="fab fa-instagram fa-2x"></i>
@@ -116,9 +113,9 @@
                         <!-- Card body -->
                         <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                             <div class="card-body">
-                                <strong>First name:</strong> Thulani<br />
-                                <strong>Last name:</strong> Nkabini<br />
-                                <strong>Email:</strong> thulani.nkabini@live.com<br />
+                                <strong>First name:</strong><p id="fname"></p><br />
+                                <strong>Last name:</strong><p id="lname"></p id></p><br />
+                                <strong>Email:</strong><p id="email"></p><br />
                             </div>
                         </div>
                     </div>
@@ -155,11 +152,11 @@
                         <!-- Card body -->
                         <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                             <div class="card-body">
-                                <strong>Highest Qualification:</strong> National Senior Certificate<br/>
-                                <strong>My APS Score:</strong> 32<br/>
-                                <strong>English Level:</strong> 4<br/>
-                                <strong>Mathematics Level:</strong> 5<br/>
-                                <strong>Physical Science Level:</strong> 6<br/>
+                                <strong>Highest Qualification:</strong><p id="cert"></p><br/>
+                                <strong>My APS Score:</strong><p id="aps"></p><br/>
+                                <strong>English Level:</strong><p id="eng"></p><br/>
+                                <strong>Mathematics Level:</strong><p id="math"></p><br/>
+                                <strong>Physical Science Level:</strong><p id="phy"></p><br/>
                             </div>
                         </div>
                     </div>
@@ -186,6 +183,56 @@
     <script type="text/javascript">
         // Animations initialization
         new WOW().init();
+
+        function profile() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        var obj = JSON.parse(this.responseText);
+                        var x;
+                        var fname = "";
+                        var lname = "";
+                        var email = "";
+                        var cert = "";
+                        var aps = "";
+                        var eng = "";
+                        var math = "";
+                        var phy = "";
+
+                        if (obj.length > 0) {
+                            for (x in obj) {
+                                fname = obj[x].first_name;
+                                lname = obj[x].last_name;
+                                email = obj[x].email;
+                                cert = obj[x].highest_qualification;
+                                aps = obj[x].aps_score;
+                                eng = obj[x].english;
+                                math = obj[x].maths;
+                                phy = obj[x].physics;
+                            }
+
+                            document.getElementById("fname").innerHTML = fname;
+                            document.getElementById("lname").innerHTML = lname;
+                            document.getElementById("email").innerHTML = email;
+
+                            document.getElementById("cert").innerHTML = cert;
+                            document.getElementById("aps").innerHTML = aps;
+                            document.getElementById("eng").innerHTML = aps;
+                            document.getElementById("math").innerHTML = math;
+                            document.getElementById("phy").innerHTML = phy;
+
+                            document.getElementById("name_badge").innerHTML = fname + " " + lname;
+                            
+                        } else {
+                            
+                        }            
+
+                    }
+                };
+                xmlhttp.open("GET", "/active_user", true);
+                xmlhttp.send();
+            }
 
     </script>
 

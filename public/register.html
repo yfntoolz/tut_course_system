@@ -1,21 +1,3 @@
-<?php
-
-function cache(){
-    session_start();
-    $email = $_COOKIE["student_email"];
-    $aps = $_COOKIE["student_aps"];
-    $english = $_COOKIE["student_eng"];
-    $math = $_COOKIE["student_math"];
-    $phy = $_COOKIE["student_phy"];
-
-    $_SESSION['student_email'] = $email;
-    $_SESSION['student_aps'] = $aps;
-    $_SESSION['student_english'] = $english;
-    $_SESSION['student_math'] = $math;
-    $_SESSION['student_physics'] = $phy;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +12,7 @@ function cache(){
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/mdb.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" href="cache.js"></script>
 </head>
 
 <body>
@@ -160,7 +143,6 @@ function cache(){
                                 <select class="form-control"
                                     style="border: none;border-bottom: 1pt solid rgba(0, 0, 0, 0.171);"
                                     name="highest_qualification" id="sel1">
-                                    <option>Select Highest Qualification</option>
                                     <option value="National Senior Certificate">National Senior Certificate</option>
                                     <option value="National Certificate (Vocational) at NQF Level 4">National
                                         Certificate (Vocational) at NQF Level 4</option>
@@ -224,7 +206,7 @@ function cache(){
                         <div class="col-md-12">
                             <button class="btn btn-indigo btn-rounded prevBtn float-left"
                                 type="button">Previous</button>
-                            <button class="btn btn-default btn-rounded float-right" type="submit">Submit</button>
+                            <button class="btn btn-default btn-rounded float-right" onsubmit="capture('lo@g.co',24,4,5,5)" type="submit">Submit</button>
                         </div>
 
                     </div>
@@ -294,38 +276,12 @@ function cache(){
         });
     </script>
     <script type="text/javascript">
-        var cache_email;
 
         function captureEmail() {
-            cache_email = document.forms["reg_form"]["email"].value;
-            cache_aps = document.forms["reg_form"]["aps_score"].value;
-            cache_english = document.forms["reg_form"]["english"].value;
-            cache_math = document.forms["reg_form"]["mathematics"].value;
-            cache_physics = document.forms["reg_form"]["physics"].value;
+            window.location.assign("http://" + window.location.hostname + "/courses.html")
 
-            createCookie("student_email", cache_email, 1);
-            createCookie("student_aps", cache_aps, 1);
-            createCookie("student_eng", cache_english, 1);
-            createCookie("student_math", cache_math, 1);
-            createCookie("student_phy", cache_physics, 1);
         }
 
-        // Function to create the cookie 
-        function createCookie(name, value, days) {
-            var expires;
-
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toGMTString();
-            }
-            else {
-                expires = "";
-            }
-
-            document.cookie = escape(name) + "=" +
-                escape(value) + expires + "; path=/";
-        } 
     </script>
 
 </body>

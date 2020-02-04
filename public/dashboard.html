@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body onload="loaddata()">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark scrolling-navbar">
     <div class="container">
@@ -313,6 +313,33 @@
         toastr.info("Folder 3 has been clicked!", "Folder 3", );
       });
     });
+
+    //--------------------------IMPORTANT STUFF---------------------------
+      function loaddata() {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+             
+              var obj = JSON.parse(this.responseText);
+
+              var x;
+              var text = "";
+              if (obj.length > 0) {
+                for (x in obj) {
+                  text += "<li>" + obj[x].course_name + " APS:" + obj[x].aps + "</li>";
+                }
+              } else {
+              }
+
+              document.getElementById("ava_courses").innerHTML = text;
+              document.getElementById("ranking_message").innerHTML = message;
+
+            }
+          };
+          xmlhttp.open("GET", "/dashboard", true);
+          xmlhttp.send();
+        }
+    //----------------------------------------------------------------------
 
   </script>
 
