@@ -2,35 +2,6 @@ const express = require('express')
 const mysql = require('mysql')
 const router = express.Router()
 
-router.get('/users', (req, resp) => {
-
-    const connection = getConnection();
-
-    const email = getEmail();
-
-    console.log("After invoking getEmail() the value is " + email);
-
-    var queryString = "SELECT aps_score,english,maths,physics FROM student WHERE email = 'thulani.nkabini@live.com'";
-    //var queryString = "SELECT aps_score,english,maths,physics FROM student WHERE email = " + email[0].email;
-
-    connection.query(queryString, (error, rows, fields) => {
-
-        if (error) {
-
-            console.log('Failed to query for users ' + error)
-            resp.sendStatus(500)
-
-            return
-
-        }
-
-        resp.json(rows)
-    })
-
-
-
-})
-
 router.get('/active_user', (req, resp) => {
 
     const connection = getConnection();
@@ -43,18 +14,13 @@ router.get('/active_user', (req, resp) => {
 
         if (error) {
 
-            console.log('Failed to query for users ' + error)
             res.sendStatus(500)
 
             return
 
         } else {
 
-            console.log("Executing else statement that should return " + res[0].email);
-
             email_active = res[0].email;
-
-            console.log("After invoking getEmail() the value is " + email_active);
 
             var queryString = "SELECT * FROM student WHERE email = ?";
 
@@ -62,7 +28,6 @@ router.get('/active_user', (req, resp) => {
 
                 if (error) {
 
-                    console.log('Failed to query for users ' + error)
                     resp.sendStatus(500)
 
                     return
@@ -71,12 +36,8 @@ router.get('/active_user', (req, resp) => {
 
                 resp.json(rows)
             })
-           
-
         }
     })
-
-
 })
 
 router.get('/dashboard', (req, resp) => {
@@ -91,26 +52,20 @@ router.get('/dashboard', (req, resp) => {
 
         if (error) {
 
-            console.log('Failed to query for users ' + error)
             res.sendStatus(500)
 
             return
 
         } else {
 
-            console.log("Executing else statement that should return " + res[0].email);
-
             email_active = res[0].email;
 
-            console.log("After invoking getEmail() the value is " + email_active);
+            var queryString = "SELECT * FROM ranks WHERE email = ?";
 
-            var queryString = "SELECT * FROM student WHERE email = ?";
-
-            connection.query(queryString, [email_active], (error, rows, fields) => {
+            connection.query(queryString, [email_active], (error, res, rows) => {
 
                 if (error) {
 
-                    console.log('Failed to query for users ' + error)
                     resp.sendStatus(500)
 
                     return
@@ -119,44 +74,10 @@ router.get('/dashboard', (req, resp) => {
 
                 resp.json(rows)
             })
-
-
         }
     })
-
 
 })
-
-function getEmail() {
-
-    const connection = getConnection();
-
-    var queryString = "SELECT email FROM active_user LIMIT 1";
-
-    connection.query(queryString, (error, res, rows) => {
-
-        if (error) {
-
-            console.log('Failed to query for users ' + error)
-            res.sendStatus(500)
-
-            return
-
-        } else {
-
-            console.log("Executing else statement that should return " + res[0].email);
-
-            return res[0].email;
-
-        }
-    })
-}
-
-var response = (function () {
-    var a;
-    // calculate a
-    return a;
-})();
 
 // Register User
 router.post('/user_create', (req, resp) => {
@@ -180,8 +101,6 @@ router.post('/user_create', (req, resp) => {
 
         if (err) {
 
-            console.log("Failed to insert new user: " + err)
-
             resp.sendStatus(500)
 
             return
@@ -197,8 +116,6 @@ router.post('/user_create', (req, resp) => {
 
         if (err) {
 
-            console.log("Failed to insert new user: " + err)
-
             resp.sendStatus(500)
 
             return
@@ -207,10 +124,8 @@ router.post('/user_create', (req, resp) => {
         resp.writeHead(301,
             { Location: "http://" + req.headers['host'] + '/courses.html' }
         );
-        resp.end();
-        //resp.writeHead(200, { "Location": "http://" + req.headers['host'] + '/courses.html' });
 
-        //resp.sendStatus(200)
+        resp.end();
 
     })
 })
@@ -225,8 +140,6 @@ router.post('/login', (req, resp) => {
 
         connection.query(queryString, [email], (error, results, fields) => {
         
-        console.log("Email is: " + email);
-        console.log("Password is: " + password);
         if (error) {
             resp.send({
                 "code": 400,
@@ -242,21 +155,16 @@ router.post('/login', (req, resp) => {
 
                         if (err) {
 
-                            console.log("Failed to insert new user: " + err)
-
                             resp.sendStatus(500)
 
                             return
-                        }else{
-                            
                         }
-
-
                     })
 
                     resp.writeHead(301,
                         { Location: "http://" + req.headers['host'] + '/dashboard.html' }
                     );
+
                     resp.end();
                 }
                 else {
@@ -276,11 +184,11 @@ router.post('/login', (req, resp) => {
     })
 })
 
-router.post('/logout', (req, resp) => {
+router.get('/logout', (req, resp) => {
 
     const connection = getConnection()
 
-    var queryString = "DELETE FROM active_user;";
+    var queryString = "DELETE FROM active_user";
 
     connection.query(queryString, (error, results, fields) => {
 
@@ -334,8 +242,6 @@ router.get('/get_courses/:aps/:eng/:math/:phy', (req, resp) => {
     })
 })
 
-
-
 // Register User
 router.get('/apply/:course/:emailAddress/:rank', (req, resp) => {
 
@@ -351,7 +257,6 @@ router.get('/apply/:course/:emailAddress/:rank', (req, resp) => {
 
         if (err) {
 
-            console.log("Failed to insert new user: " + err)
             resp.sendStatus(500)
 
             return
@@ -363,7 +268,6 @@ router.get('/apply/:course/:emailAddress/:rank', (req, resp) => {
         return
 
     })
-
 })
 
 
