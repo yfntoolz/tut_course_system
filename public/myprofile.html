@@ -52,10 +52,9 @@
 
                 <!-- Right -->
                 <ul class="navbar-nav nav-flex-icons">
-
                     <li class="nav-item">
-                        <a href="" class="nav-link" target="_blank">
-                            | <i class="fas fa-sign-out-alt"></i>
+                        <a class="nav-link" href="/logout">
+                            | Sign Out
                         </a>
                     </li>
                 </ul>
@@ -70,105 +69,116 @@
     <main>
         <div class="container" style="margin-top: 50px;">
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="tile">
-            <img class="background" src="./img/overlays/pp.jpg">
-            <div class="profile_pic">
-              <img src="./img/overlays/pp.jpg">
-              <p class="title" id="name_badge">Thulani Nkabini</p>
-              <p class="sub_title">Student</p>
-              <div class="icons1">
-                <i class="fab fa-instagram fa-2x"></i>
-                <i class="fab fa-twitter-square fa-2x"></i>
-                <i class="fab fa-facebook-square fa-2x"></i>
-              </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="tile">
+                        <img class="background" src="./img/overlays/pp.jpg">
+                        <div class="profile_pic">
+                            <img src="./img/overlays/pp.jpg">
+                            <p class="title" id="name_badge">Thulani Nkabini</p>
+                            <p class="sub_title">Student</p>
+                            <div class="icons1">
+                                <i class="fab fa-instagram fa-2x"></i>
+                                <i class="fab fa-twitter-square fa-2x"></i>
+                                <i class="fab fa-facebook-square fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <!--Section: Accordion-->
+                    <section class="mb-5">
+
+                        <!--Accordion wrapper-->
+                        <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+                            <!-- Accordion card -->
+                            <div class="card">
+
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingOne">
+
+                                    <!-- Heading -->
+                                    <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx"
+                                        href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <h5 class="mt-1 mb-0">
+                                            <span>Basic Information</span>
+                                        </h5>
+                                    </a>
+
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseOne" class="collapse show" role="tabpanel"
+                                    aria-labelledby="headingOne">
+                                    <div class="card-body">
+                                        <strong>First name:</strong>
+                                        <p id="fname"></p><br />
+                                        <strong>Last name:</strong>
+                                        <p id="lname"></p id>
+                                        </p><br />
+                                        <strong>Email:</strong>
+                                        <p id="email"></p><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Accordion card -->
+
+                        </div>
+                        <!--/.Accordion wrapper-->
+
+                    </section>
+                    <!--Section: Accordion-->
+
+                    <!--Section: Accordion-->
+                    <section class="mb-5">
+
+                        <!--Accordion wrapper-->
+                        <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+                            <!-- Accordion card -->
+                            <div class="card">
+
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingOne">
+
+                                    <!-- Heading -->
+                                    <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx"
+                                        href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <h5 class="mt-1 mb-0">
+                                            <span>Qualification Information</span>
+                                        </h5>
+                                    </a>
+
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseOne" class="collapse show" role="tabpanel"
+                                    aria-labelledby="headingOne">
+                                    <div class="card-body">
+                                        <strong>Highest Qualification:</strong>
+                                        <p id="cert"></p><br />
+                                        <strong>My APS Score:</strong>
+                                        <p id="aps"></p><br />
+                                        <strong>English Level:</strong>
+                                        <p id="eng"></p><br />
+                                        <strong>Mathematics Level:</strong>
+                                        <p id="math"></p><br />
+                                        <strong>Physical Science Level:</strong>
+                                        <p id="phy"></p><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Accordion card -->
+
+                        </div>
+                        <!--/.Accordion wrapper-->
+
+                    </section>
+                    <!--Section: Accordion-->
+                </div>
             </div>
-          </div>
-
-    </div>
-    <div class="col-md-8">
-            <!--Section: Accordion-->
-            <section class="mb-5">
-
-                <!--Accordion wrapper-->
-                <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-                    <!-- Accordion card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingOne">
-
-                            <!-- Heading -->
-                            <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
-                                <h5 class="mt-1 mb-0">
-                                    <span>Basic Information</span>
-                                </h5>
-                            </a>
-
-                        </div>
-
-                        <!-- Card body -->
-                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="card-body">
-                                <strong>First name:</strong><p id="fname"></p><br />
-                                <strong>Last name:</strong><p id="lname"></p id></p><br />
-                                <strong>Email:</strong><p id="email"></p><br />
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Accordion card -->
-
-                </div>
-                <!--/.Accordion wrapper-->
-
-            </section>
-            <!--Section: Accordion-->
-
-            <!--Section: Accordion-->
-            <section class="mb-5">
-
-                <!--Accordion wrapper-->
-                <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-                    <!-- Accordion card -->
-                    <div class="card">
-
-                        <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingOne">
-
-                            <!-- Heading -->
-                            <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne"
-                                aria-expanded="true" aria-controls="collapseOne">
-                                <h5 class="mt-1 mb-0">
-                                    <span>Qualification Information</span>
-                                </h5>
-                            </a>
-
-                        </div>
-
-                        <!-- Card body -->
-                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="card-body">
-                                <strong>Highest Qualification:</strong><p id="cert"></p><br/>
-                                <strong>My APS Score:</strong><p id="aps"></p><br/>
-                                <strong>English Level:</strong><p id="eng"></p><br/>
-                                <strong>Mathematics Level:</strong><p id="math"></p><br/>
-                                <strong>Physical Science Level:</strong><p id="phy"></p><br/>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Accordion card -->
-
-                </div>
-                <!--/.Accordion wrapper-->
-
-            </section>
-            <!--Section: Accordion-->
-    </div>
-</div>
 
 
 
@@ -185,54 +195,54 @@
         new WOW().init();
 
         function profile() {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
 
-                        var obj = JSON.parse(this.responseText);
-                        var x;
-                        var fname = "";
-                        var lname = "";
-                        var email = "";
-                        var cert = "";
-                        var aps = "";
-                        var eng = "";
-                        var math = "";
-                        var phy = "";
+                    var obj = JSON.parse(this.responseText);
+                    var x;
+                    var fname = "";
+                    var lname = "";
+                    var email = "";
+                    var cert = "";
+                    var aps = "";
+                    var eng = "";
+                    var math = "";
+                    var phy = "";
 
-                        if (obj.length > 0) {
-                            for (x in obj) {
-                                fname = obj[x].first_name;
-                                lname = obj[x].last_name;
-                                email = obj[x].email;
-                                cert = obj[x].highest_qualification;
-                                aps = obj[x].aps_score;
-                                eng = obj[x].english;
-                                math = obj[x].maths;
-                                phy = obj[x].physics;
-                            }
+                    if (obj.length > 0) {
+                        for (x in obj) {
+                            fname = obj[x].first_name;
+                            lname = obj[x].last_name;
+                            email = obj[x].email;
+                            cert = obj[x].highest_qualification;
+                            aps = obj[x].aps_score;
+                            eng = obj[x].english;
+                            math = obj[x].maths;
+                            phy = obj[x].physics;
+                        }
 
-                            document.getElementById("fname").innerHTML = fname;
-                            document.getElementById("lname").innerHTML = lname;
-                            document.getElementById("email").innerHTML = email;
+                        document.getElementById("fname").innerHTML = fname;
+                        document.getElementById("lname").innerHTML = lname;
+                        document.getElementById("email").innerHTML = email;
 
-                            document.getElementById("cert").innerHTML = cert;
-                            document.getElementById("aps").innerHTML = aps;
-                            document.getElementById("eng").innerHTML = aps;
-                            document.getElementById("math").innerHTML = math;
-                            document.getElementById("phy").innerHTML = phy;
+                        document.getElementById("cert").innerHTML = cert;
+                        document.getElementById("aps").innerHTML = aps;
+                        document.getElementById("eng").innerHTML = aps;
+                        document.getElementById("math").innerHTML = math;
+                        document.getElementById("phy").innerHTML = phy;
 
-                            document.getElementById("name_badge").innerHTML = fname + " " + lname;
-                            
-                        } else {
-                            
-                        }            
+                        document.getElementById("name_badge").innerHTML = fname + " " + lname;
+
+                    } else {
 
                     }
-                };
-                xmlhttp.open("GET", "/active_user", true);
-                xmlhttp.send();
-            }
+
+                }
+            };
+            xmlhttp.open("GET", "/active_user", true);
+            xmlhttp.send();
+        }
 
     </script>
 
