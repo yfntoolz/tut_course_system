@@ -60,9 +60,9 @@ router.get('/dashboard', (req, resp) => {
 
             email_active = res[0].email;
 
-            var queryString = "SELECT * FROM ranks WHERE email = ?";
+            var queryString = "SELECT * FROM ranks WHERE student_email = ?";
 
-            connection.query(queryString, [email_active], (error, res, rows) => {
+            connection.query(queryString, [email_active], (error, rows, fields) => {
 
                 if (error) {
 
@@ -76,7 +76,6 @@ router.get('/dashboard', (req, resp) => {
             })
         }
     })
-
 })
 
 // Register User
